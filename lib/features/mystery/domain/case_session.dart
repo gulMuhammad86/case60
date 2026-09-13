@@ -43,7 +43,7 @@ final class CaseSession {
     this.hintsUsed = 0,
     this.score = 0,
     this.xpReward = 0,
-    this.xpAwarded = false,
+    this.outcomeRecorded = false,
     this.error,
   });
 
@@ -64,8 +64,8 @@ final class CaseSession {
   /// XP reward carried on completion, ready to display on the results screen.
   final int xpReward;
 
-  /// Whether the XP reward has already been applied to player progression.
-  final bool xpAwarded;
+  /// Whether the final outcome (profile + history) has been applied.
+  final bool outcomeRecorded;
 
   final Object? error;
 
@@ -100,7 +100,7 @@ final class CaseSession {
     int? hintsUsed,
     int? score,
     int? xpReward,
-    bool? xpAwarded,
+    bool? outcomeRecorded,
     Object? error,
     bool clearError = false,
   }) {
@@ -115,7 +115,7 @@ final class CaseSession {
       hintsUsed: hintsUsed ?? this.hintsUsed,
       score: score ?? this.score,
       xpReward: xpReward ?? this.xpReward,
-      xpAwarded: xpAwarded ?? this.xpAwarded,
+      outcomeRecorded: outcomeRecorded ?? this.outcomeRecorded,
       error: clearError ? null : (error ?? this.error),
     );
   }

@@ -122,8 +122,6 @@ ProviderContainer _container() {
             hintPenaltyXp: 0,
             maxHintPenaltyXp: 0,
             timeoutXp: 0,
-            baseXpForLevel: 200,
-            levelGrowth: 1.15,
           ),
         ),
       ),

@@ -80,4 +80,15 @@ final class CaseCountdown {
     String two(int value) => value.toString().padLeft(2, '0');
     return '${two(minutes)}:${two(seconds)}';
   }
+
+  /// Formats a duration as `hh:mm:ss`, e.g. `08:42:13`, for long horizons
+  /// like the countdown to tomorrow's case.
+  static String formatHms(Duration duration) {
+    final int total = duration.inSeconds < 0 ? 0 : duration.inSeconds;
+    final int hours = total ~/ 3600;
+    final int minutes = (total % 3600) ~/ 60;
+    final int seconds = total % 60;
+    String two(int value) => value.toString().padLeft(2, '0');
+    return '${two(hours)}:${two(minutes)}:${two(seconds)}';
+  }
 }

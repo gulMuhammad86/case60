@@ -28,8 +28,8 @@ void main() {
     expect(find.text('60 SECOND CHALLENGE'), findsOneWidget);
     expect(find.text('START CASE'), findsOneWidget);
     expect(find.text('XP'), findsOneWidget);
-    expect(find.text('7 DAY STREAK'), findsOneWidget);
-    expect(find.text('DETECTIVE LEVEL 12'), findsOneWidget);
+    expect(find.text('0 DAY STREAK'), findsOneWidget);
+    expect(find.text('DETECTIVE LEVEL 1'), findsOneWidget);
   });
 
   testWidgets('START CASE opens the investigation screen', (

@@ -137,36 +137,4 @@ void main() {
       expect(wrong, 10);
     });
   });
-
-  group('XPService level progression', () {
-    test('level boundaries follow the growth curve', () {
-      expect(service.xpNeededForLevel(1), 200);
-      expect(service.xpNeededForLevel(2), 230);
-      // 200 * 1.15^2 = 264.5, rounded down by floating-point (see 264.499).
-      expect(service.xpNeededForLevel(3), 264);
-      expect(service.xpNeededForLevel(3), greaterThan(service.xpNeededForLevel(2)));
-    });
-
-    test('progressForTotal maps total XP to a level', () {
-      final LevelProgress zero =
-          service.progressForTotal(0);
-      expect(zero.level, 1);
-      expect(zero.xpIntoLevel, 0);
-      expect(zero.xpForNextLevel, 200);
-
-      final LevelProgress partial = service.progressForTotal(220);
-      expect(partial.level, 2);
-      expect(partial.xpIntoLevel, 20);
-      expect(partial.xpForNextLevel, 230);
-
-      final LevelProgress exactBang = service.progressForTotal(200);
-      expect(exactBang.level, 2);
-      expect(exactBang.xpIntoLevel, 0);
-    });
-
-    test('progress fraction clamps to its level band', () {
-      expect(service.progressForTotal(100).progress, 0.5);
-      expect(service.progressForTotal(0).progress, 0);
-    });
-  });
 }

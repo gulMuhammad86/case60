@@ -1,8 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/services/app_clock.dart';
 import '../../../core/timer/case_countdown.dart';
+import '../../history/data/history_provider.dart';
+import '../../player/application/case_outcome_recorder.dart';
+import '../../player/application/streak_service.dart';
 import '../../player/application/xp_service.dart';
-import '../../player/data/player_stats_provider.dart';
+import '../../player/data/detective_profile_provider.dart';
+import '../../player/domain/detective_profile.dart';
 import '../domain/case_session.dart';
 import '../domain/models/answer_option.dart';
 import '../domain/models/mystery.dart';
@@ -29,10 +34,19 @@ final class CaseController extends Notifier<CaseSession> {
 
   /// Starts a fresh session for [mystery].
   ///
-  /// Resumes an already-active session unchanged (and never starts a second
-  /// timer). After a terminal phase it clears the slate for a new attempt.
+  /// Refuses to start when the case's day has already been solved (the daily
+  /// lock prevents replaying today's case for another score). Resumes an
+  /// already-active session unchanged (and never starts a second timer). After
+  /// a terminal phase it clears the slate for a new attempt.
   void begin(Mystery mystery) {
     final CasePhase phase = state.phase;
+    final bool locked = ref.read(streakServiceProvider).completedOn(
+      ref.read(detectiveProfileProvider).lastCompletedDate,
+      mystery.availableDate,
+    );
+    if (locked) {
+      return;
+    }
     if (phase == CasePhase.inProgress ||
         phase == CasePhase.submitted ||
         phase == CasePhase.loading ||
@@ -71,17 +85,19 @@ final class CaseController extends Notifier<CaseSession> {
     state = current.copyWith(selectedAnswerId: answerId);
   }
 
-  /// Submits the selected answer, freezing the timer, scoring the attempt and
-  /// awarding XP exactly once.
+  /// Submits the selected answer, freezing the timer, scoring the attempt,
+  /// and recording the outcome (XP, stats, streak, history) exactly once.
   ///
   /// Safe against duplicate submissions: once the phase leaves `inProgress`,
-  /// further calls are ignored. The XP reward is applied to player progression
-  /// here so finishing a case banked it exactly once per attempt.
+  /// further calls are ignored. The outcome is applied to player progression
+  /// and history here so finishing a case banks everything once per attempt.
   void submit() {
     final CaseSession current = state;
     final Mystery? mystery = current.mystery;
     final String? selected = current.selectedAnswerId;
-    if (mystery == null || current.phase != CasePhase.inProgress || selected == null) {
+    if (mystery == null ||
+        current.phase != CasePhase.inProgress ||
+        selected == null) {
       return;
     }
 
@@ -124,12 +140,15 @@ final class CaseController extends Notifier<CaseSession> {
       score: score,
       xpReward: xpReward,
     );
-    state = state.copyWith(phase: CasePhase.completed);
 
-    if (xpReward > 0) {
-      ref.read(playerStatsProvider.notifier).awardXp(xpReward);
-    }
-    state = state.copyWith(xpAwarded: true);
+    _recordOutcome(
+      mystery: mystery,
+      solved: correct,
+      solveTimeSeconds: solved,
+      xpReward: xpReward,
+    );
+
+    state = state.copyWith(phase: CasePhase.completed, outcomeRecorded: true);
   }
 
   /// Consumes the next hint while solving.
@@ -155,6 +174,29 @@ final class CaseController extends Notifier<CaseSession> {
     state = const CaseSession();
   }
 
+  void _recordOutcome({
+    required Mystery mystery,
+    required bool solved,
+    required int solveTimeSeconds,
+    required int xpReward,
+  }) {
+    if (state.outcomeRecorded) {
+      return;
+    }
+    final DateTime now = ref.read(appClockProvider).now();
+    final DetectiveProfile profile = ref.read(detectiveProfileProvider);
+    final RecordedCaseOutcome outcome = ref.read(caseOutcomeRecorderProvider).record(
+      profile: profile,
+      solved: solved,
+      solveTimeSeconds: solveTimeSeconds,
+      xpReward: xpReward,
+      caseNumber: mystery.caseNumber,
+      now: now,
+    );
+    ref.read(detectiveProfileProvider.notifier).replace(outcome.profile);
+    ref.read(historyProvider.notifier).add(outcome.entry);
+  }
+
   void _startCountdown(int seconds) {
     final CaseCountdown countdown = CaseCountdown(
       duration: Duration(seconds: seconds < 0 ? 0 : seconds),
@@ -175,5 +217,15 @@ final class CaseController extends Notifier<CaseSession> {
       mystery: state.mystery,
       remainingSeconds: 0,
     );
+    final Mystery? mystery = state.mystery;
+    if (mystery != null) {
+      _recordOutcome(
+        mystery: mystery,
+        solved: false,
+        solveTimeSeconds: mystery.timeLimitSeconds,
+        xpReward: 0,
+      );
+    }
+    state = state.copyWith(outcomeRecorded: true);
   }
 }

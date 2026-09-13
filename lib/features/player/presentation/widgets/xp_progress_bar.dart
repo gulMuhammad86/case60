@@ -4,13 +4,13 @@ import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_radius.dart';
 import '../../../../app/theme/app_spacing.dart';
 import '../../../../app/theme/app_typography.dart';
-import '../../domain/player_stats.dart';
+import '../../domain/detective_profile.dart';
 
 /// Level-up progress toward the next detective rank.
 class XPProgressBar extends StatelessWidget {
-  const XPProgressBar({super.key, required this.stats});
+  const XPProgressBar({super.key, required this.standing});
 
-  final PlayerStats stats;
+  final DetectiveStanding standing;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class XPProgressBar extends StatelessWidget {
             Text('XP', style: AppTypography.overline.copyWith(color: AppColors.accent)),
             const Spacer(),
             Text(
-              '${stats.xpCurrent} / ${stats.xpForNextLevel}',
+              '${standing.xpIntoLevel} / ${standing.xpForNextLevel}',
               style: AppTypography.caption,
             ),
           ],
@@ -31,7 +31,7 @@ class XPProgressBar extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(AppRadius.pill),
           child: LinearProgressIndicator(
-            value: stats.xpProgress,
+            value: standing.xpProgress,
             minHeight: 10,
             backgroundColor: AppColors.surfaceElevated,
             color: AppColors.accent,

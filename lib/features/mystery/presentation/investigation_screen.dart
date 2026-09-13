@@ -18,8 +18,10 @@ import '../data/mystery_providers.dart';
 import '../domain/case_session.dart';
 import '../domain/models/clue.dart';
 import '../domain/models/mystery.dart';
+import '../../player/data/detective_profile_provider.dart';
 import 'widgets/answer_option_tile.dart';
 import 'widgets/case_number_badge.dart';
+import 'widgets/daily_lock_view.dart';
 
 /// The active case experience presented as a detective's case file.
 class InvestigationScreen extends ConsumerWidget {
@@ -97,6 +99,15 @@ class InvestigationScreen extends ConsumerWidget {
     CaseSession session,
   ) {
     final CasePhase phase = session.phase;
+    final bool lockedToday = ref.watch(caseLockedTodayProvider);
+
+    if (lockedToday && !session.isActive) {
+      return DailyLockView(
+        caseNumber: todayCase.hasValue
+            ? todayCase.requireValue.caseNumber
+            : null,
+      );
+    }
 
     if (todayCase.isLoading ||
         phase == CasePhase.initial ||

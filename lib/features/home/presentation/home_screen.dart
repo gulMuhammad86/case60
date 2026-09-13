@@ -14,8 +14,8 @@ import '../../../core/widgets/section_header.dart';
 import '../../mystery/data/mystery_providers.dart';
 import '../../mystery/domain/models/mystery.dart';
 import '../../mystery/presentation/widgets/case_card.dart';
-import '../../player/data/player_stats_provider.dart';
-import '../../player/domain/player_stats.dart';
+import '../../player/data/detective_profile_provider.dart';
+import '../../player/domain/detective_profile.dart';
 import '../../player/presentation/widgets/detective_level_badge.dart';
 import '../../player/presentation/widgets/streak_badge.dart';
 import '../../player/presentation/widgets/xp_progress_bar.dart';
@@ -29,7 +29,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<Mystery> todayCase = ref.watch(todayMysteryProvider);
-    final PlayerStats stats = ref.watch(playerStatsProvider);
+    final DetectiveStanding standing = ref.watch(detectiveStandingProvider);
 
     return Scaffold(
       body: DecoratedBox(
@@ -86,19 +86,21 @@ class HomeScreen extends ConsumerWidget {
                               ),
                             ),
                             const SizedBox(height: AppSpacing.xl),
-                            XPProgressBar(stats: stats),
+                            XPProgressBar(standing: standing),
                             const SizedBox(height: AppSpacing.md),
                             SizedBox(
                               width: double.infinity,
                               child: Row(
                                 children: <Widget>[
                                   Expanded(
-                                    child: StreakBadge(days: stats.streakDays),
+                                    child: StreakBadge(
+                                      days: standing.streakDays,
+                                    ),
                                   ),
                                   const SizedBox(width: AppSpacing.md),
                                   Expanded(
                                     child: DetectiveLevelBadge(
-                                      level: stats.level,
+                                      level: standing.level,
                                     ),
                                   ),
                                 ],

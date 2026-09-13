@@ -2,6 +2,7 @@ import 'package:fake_async/fake_async.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:case60/features/history/data/history_provider.dart';
 import 'package:case60/features/mystery/application/case_controller.dart';
 import 'package:case60/features/mystery/domain/case_session.dart';
 import 'package:case60/features/mystery/domain/models/answer_option.dart';
@@ -9,29 +10,15 @@ import 'package:case60/features/mystery/domain/models/clue.dart';
 import 'package:case60/features/mystery/domain/models/mystery.dart';
 import 'package:case60/features/mystery/domain/mystery_category.dart';
 import 'package:case60/features/mystery/domain/mystery_difficulty.dart';
-import 'package:case60/features/player/application/xp_service.dart';
-import 'package:case60/features/player/data/player_stats_provider.dart';
+import 'package:case60/features/player/data/detective_profile_provider.dart';
+import 'package:case60/features/player/domain/detective_profile.dart';
 
 void main() {
   late ProviderContainer container;
   late CaseController controller;
 
   setUp(() {
-    // A flat, far-away level curve keeps XP awards from crossing level 12 so
-    // the asserted totals stay predictable; the reward bases match the
-    // production defaults.
-    container = ProviderContainer(
-      overrides: [
-        xpServiceProvider.overrideWithValue(
-          const XPService(
-            XPConfig(
-              baseXpForLevel: 100000,
-              levelGrowth: 1.0,
-            ),
-          ),
-        ),
-      ],
-    );
+    container = ProviderContainer();
     controller = container.read(caseControllerProvider.notifier);
   });
 
@@ -76,6 +63,54 @@ void main() {
           CasePhase.inProgress,
         );
         expect(container.read(caseControllerProvider).remainingSeconds, 60);
+      });
+    });
+
+    test('refuses to start when the case day has already been solved', () {
+      container = ProviderContainer(
+        overrides: [
+          detectiveProfileProvider.overrideWith(
+            () => DetectiveProfileController(
+              initial: const DetectiveProfile(
+                lastCompletedDate: '2026-09-13',
+                streakDays: 2,
+              ),
+            ),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+      controller = container.read(caseControllerProvider.notifier);
+
+      controller.begin(_case());
+      expect(
+        container.read(caseControllerProvider).phase,
+        CasePhase.initial,
+      );
+    });
+
+    test('starts normally when the case day was not completed', () {
+      container = ProviderContainer(
+        overrides: [
+          detectiveProfileProvider.overrideWith(
+            () => DetectiveProfileController(
+              initial: const DetectiveProfile(
+                lastCompletedDate: '2026-09-12',
+                streakDays: 1,
+              ),
+            ),
+          ),
+        ],
+      );
+      addTearDown(container.dispose);
+      controller = container.read(caseControllerProvider.notifier);
+
+      fakeAsync((FakeAsync async) {
+        controller.begin(_case());
+        expect(
+          container.read(caseControllerProvider).phase,
+          CasePhase.inProgress,
+        );
       });
     });
   });
@@ -231,7 +266,7 @@ void main() {
       });
     });
 
-    test('a timeout awards no score, XP or player progression', () {
+    test('a timeout records a failed attempt but no XP and no streak', () {
       fakeAsync((FakeAsync async) {
         controller.begin(_case());
         async.elapse(const Duration(seconds: 60));
@@ -239,8 +274,18 @@ void main() {
         final CaseSession session = container.read(caseControllerProvider);
         expect(session.score, 0);
         expect(session.xpReward, 0);
-        expect(session.xpAwarded, isFalse);
-        expect(container.read(playerStatsProvider).xpCurrent, 1380);
+        expect(session.outcomeRecorded, isTrue);
+
+        final DetectiveProfile profile = container.read(
+          detectiveProfileProvider,
+        );
+        expect(profile.totalXp, 0);
+        expect(profile.casesFailed, 1);
+        expect(profile.casesSolved, 0);
+        expect(profile.streakDays, 0);
+        expect(profile.lastCompletedDate, isNull);
+
+        expect(container.read(historyProvider), hasLength(1));
       });
     });
   });
@@ -256,16 +301,22 @@ void main() {
         expect(session.phase, CasePhase.completed);
         expect(session.score, 75);
         expect(session.xpReward, 130);
-        expect(session.xpAwarded, isTrue);
+        expect(session.outcomeRecorded, isTrue);
 
-        expect(container.read(playerStatsProvider).xpCurrent, 1510);
+        DetectiveProfile profile = container.read(detectiveProfileProvider);
+        expect(profile.totalXp, 130);
+        expect(profile.casesSolved, 1);
+        expect(profile.streakDays, 1);
 
         controller.submit();
-        expect(container.read(playerStatsProvider).xpCurrent, 1510);
+        profile = container.read(detectiveProfileProvider);
+        expect(profile.totalXp, 130);
+        expect(container.read(historyProvider), hasLength(1));
       });
     });
 
-    test('a wrong answer earns a reduced score and flat XP', () {
+    test('a wrong answer earns a reduced score, flat XP and counts a failure',
+        () {
       fakeAsync((FakeAsync async) {
         controller.begin(_case(correctAnswerId: 'a2'));
         controller.selectAnswer('a1');
@@ -275,7 +326,15 @@ void main() {
         expect(session.isCorrect, isFalse);
         expect(session.score, 19);
         expect(session.xpReward, 15);
-        expect(container.read(playerStatsProvider).xpCurrent, 1395);
+
+        final DetectiveProfile profile = container.read(
+          detectiveProfileProvider,
+        );
+        expect(profile.totalXp, 15);
+        expect(profile.casesFailed, 1);
+        expect(profile.casesSolved, 0);
+        expect(profile.streakDays, 0);
+        expect(profile.lastCompletedDate, isNull);
       });
     });
 
@@ -290,7 +349,7 @@ void main() {
         expect(session.hintsUsed, 1);
         expect(session.score, 64);
         expect(session.xpReward, 120);
-        expect(container.read(playerStatsProvider).xpCurrent, 1500);
+        expect(container.read(detectiveProfileProvider).totalXp, 120);
       });
     });
   });

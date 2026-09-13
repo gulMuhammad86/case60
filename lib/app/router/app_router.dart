@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/achievements/presentation/achievements_placeholder_screen.dart';
 import '../../features/ads/presentation/ads_placeholder_screen.dart';
-import '../../features/detective/presentation/detective_placeholder_screen.dart';
-import '../../features/history/presentation/history_placeholder_screen.dart';
+import '../../features/detective/presentation/detective_profile_screen.dart';
+import '../../features/history/presentation/history_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/mystery/presentation/investigation_screen.dart';
 import '../../features/results/presentation/results_screen.dart';
@@ -73,7 +73,7 @@ final class AppRouter {
           path: AppRoute.profile.path,
           name: AppRoute.profile.name,
           builder: (BuildContext context, GoRouterState state) {
-            return const DetectivePlaceholderScreen();
+            return const DetectiveProfileScreen();
           },
         ),
         GoRoute(
@@ -87,7 +87,7 @@ final class AppRouter {
           path: AppRoute.history.path,
           name: AppRoute.history.name,
           builder: (BuildContext context, GoRouterState state) {
-            return const HistoryPlaceholderScreen();
+            return const HistoryScreen();
           },
         ),
         GoRoute(

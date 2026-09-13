@@ -18,9 +18,9 @@ void main() {
     expect(find.text("TODAY'S CASE"), findsOneWidget);
     expect(find.text('The Locked-Room Heist'), findsOneWidget);
     expect(find.text('START CASE'), findsOneWidget);
-    expect(find.text('7 DAY STREAK'), findsOneWidget);
-    expect(find.text('DETECTIVE LEVEL 12'), findsOneWidget);
-    expect(find.text('1380 / 2400'), findsOneWidget);
+    expect(find.text('0 DAY STREAK'), findsOneWidget);
+    expect(find.text('DETECTIVE LEVEL 1'), findsOneWidget);
+    expect(find.text('0 / 300'), findsOneWidget);
   });
 
   testWidgets('lays out without overflow on a small phone', (
@@ -34,7 +34,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('START CASE'), findsOneWidget);
-    expect(find.text('7 DAY STREAK'), findsOneWidget);
+    expect(find.text('0 DAY STREAK'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
