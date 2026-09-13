@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/services/app_clock.dart';
 import '../application/daily_mystery_service.dart';
+import '../domain/models/mystery.dart';
 import '../domain/mystery_repository.dart';
 import 'local_mystery_repository.dart';
 
@@ -21,4 +22,11 @@ final Provider<MysteryRepository> mysteryRepositoryProvider =
 final Provider<DailyMysteryService> dailyMysteryServiceProvider =
     Provider<DailyMysteryService>((Ref ref) {
   return const DailyMysteryService();
+});
+
+/// Today's featured mystery, resolved through the configured repository.
+final FutureProvider<Mystery> todayMysteryProvider = FutureProvider<Mystery>((
+  Ref ref,
+) {
+  return ref.watch(mysteryRepositoryProvider).getTodayMystery();
 });

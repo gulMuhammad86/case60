@@ -19,7 +19,7 @@ final Provider<GoRouter> routerProvider = Provider<GoRouter>(AppRouter._create);
 
 /// Centralized route names (no magic path strings in widgets).
 enum AppRoute {
-  home('/'),
+  home('/home'),
   mystery('/mystery'),
   results('/results'),
   profile('/profile'),
@@ -41,6 +41,12 @@ final class AppRouter {
   static GoRouter _create(Ref ref) {
     return GoRouter(
       initialLocation: AppRoute.home.path,
+      redirect: (BuildContext context, GoRouterState state) {
+        if (state.matchedLocation == '/') {
+          return AppRoute.home.path;
+        }
+        return null;
+      },
       routes: <RouteBase>[
         GoRoute(
           path: AppRoute.home.path,

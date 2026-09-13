@@ -8,81 +8,110 @@ import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_radius.dart';
 import '../../../app/theme/app_spacing.dart';
 import '../../../app/theme/app_typography.dart';
+import '../../../core/widgets/error_state.dart';
+import '../../../core/widgets/loading_state.dart';
+import '../../../core/widgets/section_header.dart';
+import '../../mystery/data/mystery_providers.dart';
+import '../../mystery/domain/models/mystery.dart';
+import '../../mystery/presentation/widgets/case_card.dart';
+import '../../player/data/player_stats_provider.dart';
+import '../../player/domain/player_stats.dart';
+import '../../player/presentation/widgets/detective_level_badge.dart';
+import '../../player/presentation/widgets/streak_badge.dart';
+import '../../player/presentation/widgets/xp_progress_bar.dart';
 
+/// The landing screen: today's case plus the detective's standing.
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
+  static const double _contentMaxWidth = 600;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<Mystery> todayCase = ref.watch(todayMysteryProvider);
+    final PlayerStats stats = ref.watch(playerStatsProvider);
+
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: AppSpacing.xxxl),
-              Center(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: BoxDecoration(
-                        color: AppColors.accentFaint,
-                        border: Border.all(color: AppColors.accent.withAlpha(100)),
-                        borderRadius: BorderRadius.circular(AppRadius.lg),
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: <Color>[AppColors.backgroundElevated, AppColors.background],
+          ),
+        ),
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.lg,
+                        vertical: AppSpacing.lg,
                       ),
-                      child: const Icon(
-                        Icons.search,
-                        size: 32,
-                        color: AppColors.accent,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          maxWidth: _contentMaxWidth,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const _BrandHeader(),
+                            const SizedBox(height: AppSpacing.xl),
+                            const SectionHeader(
+                              title: "TODAY'S CASE",
+                              kicker: 'DAILY BRIEFING',
+                            ),
+                            const SizedBox(height: AppSpacing.md),
+                            todayCase.when(
+                              loading: () => const Center(
+                                child: LoadingState(
+                                  message: 'Reviewing evidence…',
+                                ),
+                              ),
+                              error: (Object error, StackTrace stackTrace) =>
+                                  ErrorState(
+                                message: "Couldn't load today's case.",
+                                onRetry: () =>
+                                    ref.invalidate(todayMysteryProvider),
+                              ),
+                              data: (Mystery mystery) => CaseCard(
+                                mystery: mystery,
+                                onStart: () =>
+                                    context.go(AppRoute.mystery.path),
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.xl),
+                            XPProgressBar(stats: stats),
+                            const SizedBox(height: AppSpacing.md),
+                            SizedBox(
+                              width: double.infinity,
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: StreakBadge(days: stats.streakDays),
+                                  ),
+                                  const SizedBox(width: AppSpacing.md),
+                                  Expanded(
+                                    child: DetectiveLevelBadge(
+                                      level: stats.level,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(height: AppSpacing.lg),
-                    Text(
-                      AppConfig.appName,
-                      style: AppTypography.displayLarge.copyWith(
-                        color: AppColors.textPrimary,
-                        letterSpacing: 2.5,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(
-                      AppConfig.tagline.toUpperCase(),
-                      style: AppTypography.overline.copyWith(
-                        color: AppColors.textSecondary,
-                        letterSpacing: 2.0,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              const Spacer(),
-              const _TodayCaseCard(),
-              const SizedBox(height: AppSpacing.lg),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: _QuickStat(
-                      label: 'Streak',
-                      value: '0',
-                      color: AppColors.accent,
-                    ),
-                  ),
-                  const SizedBox(width: AppSpacing.md),
-                  Expanded(
-                    child: _QuickStat(
-                      label: 'Solved',
-                      value: '0',
-                      color: AppColors.success,
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(flex: 2),
-            ],
+              );
+            },
           ),
         ),
       ),
@@ -90,88 +119,47 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
-class _TodayCaseCard extends StatelessWidget {
-  const _TodayCaseCard();
+class _BrandHeader extends StatelessWidget {
+  const _BrandHeader();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        border: Border.all(color: AppColors.borderStrong),
-        borderRadius: BorderRadius.circular(AppRadius.md),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text('TODAY\'S CASE', style: AppTypography.overline),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'Case #001',
-            style: AppTypography.title,
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            'You have 60 seconds to solve this mystery.',
-            style: AppTypography.caption,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                context.go(AppRoute.mystery.path);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.accent,
-                foregroundColor: AppColors.textOnAccent,
-                minimumSize: const Size(0, 48),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: AppColors.accentFaint,
+                border: Border.all(color: AppColors.accent.withAlpha(100)),
+                borderRadius: BorderRadius.circular(AppRadius.lg),
               ),
+              child: const Icon(Icons.search, size: 22, color: AppColors.accent),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            Expanded(
               child: Text(
-                'BEGIN INVESTIGATION',
-                style: AppTypography.button,
+                AppConfig.appName,
+                style: AppTypography.displayMedium.copyWith(letterSpacing: 2.5),
               ),
             ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.md),
+        Container(height: 1, color: AppColors.divider),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          AppConfig.tagline.toUpperCase(),
+          style: AppTypography.overline.copyWith(
+            color: AppColors.textSecondary,
+            letterSpacing: 2.0,
+            fontSize: 12,
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _QuickStat extends StatelessWidget {
-  const _QuickStat({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        border: Border.all(color: AppColors.border),
-        borderRadius: BorderRadius.circular(AppRadius.md),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(label.toUpperCase(), style: AppTypography.overline),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            value,
-            style: AppTypography.displayMedium.copyWith(color: color),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
