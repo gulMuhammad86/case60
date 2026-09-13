@@ -32,7 +32,7 @@ void main() {
     expect(find.text('DETECTIVE LEVEL 12'), findsOneWidget);
   });
 
-  testWidgets('START CASE navigates to the mystery screen', (
+  testWidgets('START CASE opens the investigation screen', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(
@@ -48,8 +48,12 @@ void main() {
     await tester.tap(find.text('START CASE'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
+    await tester.pump();
 
-    expect(find.text('Mystery'), findsOneWidget);
-    expect(find.text('Awaiting evidence…'), findsOneWidget);
+    expect(find.text('CASE #001'), findsWidgets);
+    expect(find.text('The Locked-Room Heist'), findsWidgets);
+    expect(find.text('TIME REMAINING'), findsOneWidget);
+    expect(find.text('01:00'), findsOneWidget);
+    expect(find.text('SUBMIT ANSWER'), findsOneWidget);
   });
 }

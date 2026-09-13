@@ -7,8 +7,8 @@ import '../../features/ads/presentation/ads_placeholder_screen.dart';
 import '../../features/detective/presentation/detective_placeholder_screen.dart';
 import '../../features/history/presentation/history_placeholder_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
-import '../../features/mystery/presentation/mystery_placeholder_screen.dart';
-import '../../features/results/presentation/results_placeholder_screen.dart';
+import '../../features/mystery/presentation/investigation_screen.dart';
+import '../../features/results/presentation/results_screen.dart';
 import '../../features/settings/presentation/settings_placeholder_screen.dart';
 
 /// The single [GoRouter] instance for the app.
@@ -59,14 +59,14 @@ final class AppRouter {
           path: AppRoute.mystery.path,
           name: AppRoute.mystery.name,
           builder: (BuildContext context, GoRouterState state) {
-            return const MysteryPlaceholderScreen();
+            return const InvestigationScreen();
           },
         ),
         GoRoute(
           path: AppRoute.results.path,
           name: AppRoute.results.name,
           builder: (BuildContext context, GoRouterState state) {
-            return const ResultsPlaceholderScreen();
+            return const ResultsScreen();
           },
         ),
         GoRoute(

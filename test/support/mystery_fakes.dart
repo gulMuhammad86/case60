@@ -14,7 +14,10 @@ Mystery sampleMystery() {
     category: MysteryCategory.logic,
     difficulty: MysteryDifficulty.medium,
     story: 'A vault robbed from inside.',
-    clues: const <Clue>[Clue(id: 'c1', text: 'The latch is intact.', orderIndex: 0)],
+    clues: const <Clue>[
+      Clue(id: 'c1', text: 'The latch is intact.', orderIndex: 1),
+      Clue(id: 'c2', text: 'The vent is too narrow.', orderIndex: 0),
+    ],
     answers: const <AnswerOption>[
       AnswerOption(id: 'a1', text: 'The night guard'),
       AnswerOption(id: 'a2', text: 'The ceiling vent'),
