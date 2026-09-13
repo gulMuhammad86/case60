@@ -1,0 +1,1025 @@
+{
+  "version": 1,
+  "mysteries": [
+    {
+      "id": "alchemy-vault",
+      "caseNumber": 1,
+      "title": "The Alchemy Vault",
+      "category": "Logic",
+      "difficulty": "Easy",
+      "story": "Three sealed caskets - gold, silver, and bronze - hold a single flawless ruby somewhere among them. The labels read: Gold: 'The ruby is not here.' Silver: 'The ruby is not here either.' Bronze: 'The ruby is in the gold casket.' The warden, who never lies, tells you that exactly one label is true. Where is the ruby?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "The warden is truthful, but the labels were written by a trickster.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "Assume the ruby is in each casket in turn and count the true labels.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "Only one of the three caskets leaves exactly one true statement.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "The gold casket"
+        },
+        {
+          "id": "a2",
+          "text": "The silver casket"
+        },
+        {
+          "id": "a3",
+          "text": "The bronze casket"
+        },
+        {
+          "id": "a4",
+          "text": "Nowhere - it is hidden in the vault itself"
+        }
+      ],
+      "correctAnswerId": "a2",
+      "explanation": "Test each casket. If the ruby is in gold: 'not here' on gold is false, 'not here' on silver is true, 'in the gold casket' is true - two true labels. If in silver: gold's label is true, silver's is false, bronze's is false - exactly one true label. If in bronze: gold true, silver true, bronze false - two true labels. Only the silver casket leaves exactly one true label.",
+      "hints": [
+        "Try the bronze casket first, then check every statement against it.",
+        "You are counting true labels, not true people."
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-01"
+    },
+    {
+      "id": "bridge-in-the-dark",
+      "caseNumber": 2,
+      "title": "The Bridge in the Dark",
+      "category": "Logic",
+      "difficulty": "Hard",
+      "story": "Four colleagues must cross a rickety footbridge at night. The bridge holds at most two people at a time, and any crossing party must carry the only torch. Their crossing times are 1, 2, 5, and 10 minutes. What is the fastest time in which all four can be safely across?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "The torch must make the return trips too - until the very last crossing.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The two slowest should cross together exactly once.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "The fastest two do the shuttling.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "17 minutes"
+        },
+        {
+          "id": "a2",
+          "text": "19 minutes"
+        },
+        {
+          "id": "a3",
+          "text": "21 minutes"
+        },
+        {
+          "id": "a4",
+          "text": "24 minutes"
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "1 and 2 cross (2 min). 1 returns (3). 5 and 10 cross together (13). 2 returns (15). 1 and 2 cross again (17). Sending the two slowest as a pair once is the key: their cost is paid a single time instead of twice.",
+      "hints": [
+        "Never split the 5-minute and 10-minute walkers.",
+        "Let the quickest pair do the shuttling back and forth."
+      ],
+      "timeLimitSeconds": 90,
+      "availableDate": "2026-08-02"
+    },
+    {
+      "id": "mute-watchdog",
+      "caseNumber": 3,
+      "title": "The Mute Watchdog",
+      "category": "Detective",
+      "difficulty": "Medium",
+      "story": "Ten jewels vanish from the locked study of the Ashton estate overnight. The yard Doberman barks at any stranger, and the night guard swears it stayed silent all night. Nothing was forced, the alarm was armed, and the study was opened with its own key. Besides the owner, only one key exists - held by the owner's live-in companion, who says he was home all night. The detective arrests him on the spot. Why?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "A barking dog is the estate's only line of defense against strangers.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The room was opened with a key, and only the companion holds a second one.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "The companion claims he 'went to bed early', and the Doberman adores him.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "The live-in companion"
+        },
+        {
+          "id": "a2",
+          "text": "The night guard"
+        },
+        {
+          "id": "a3",
+          "text": "A cat burglar from the street"
+        },
+        {
+          "id": "a4",
+          "text": "The owner himself"
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "No forced entry and no alarm mean the study was opened cleanly with its only spare key. The dog's uninterrupted silence proves no one unfamiliar crossed the grounds. Both threads point to the one person who holds a key and whom the dog already knew: the live-in companion.",
+      "hints": [
+        "The dog's silence is evidence, not a detail.",
+        "What did the thief need to open the study without raising the alarm?"
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-03"
+    },
+    {
+      "id": "full-moon-swim",
+      "caseNumber": 4,
+      "title": "The Full-Moon Swim",
+      "category": "Detective",
+      "difficulty": "Easy",
+      "story": "At 11 pm under a bright full moon, the night guard of a beach club calls the police in panic: a man is drowning in the shallows. The responding officer glances at the tide chart on the clubhouse wall - low tide was at 11 pm tonight - and arrests the guard for wasting police time. Why?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "Low tide at 11 pm means the water had retreated far from the shoreline.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The spot the guard pointed to was dry sand, not water.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "The guard picked the hour of the moon, not the hour of the tide.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "At low tide the spot he pointed to was dry sand - nobody could be drowning there."
+        },
+        {
+          "id": "a2",
+          "text": "The moon was new, not full, so a 'bright full moon' was a lie."
+        },
+        {
+          "id": "a3",
+          "text": "The drowning man was just a reflection on the wet sand."
+        },
+        {
+          "id": "a4",
+          "text": "The guard had hung the wrong monthly tide chart."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "The clubhouse tide chart stated low tide at 11 pm, so the waterline was far out. The 'tragedy' happened on a stretch of sand the sea had already abandoned, so no one could have been swimming there. The guard dramatized moonrise as a drowning.",
+      "hints": [
+        "What does low tide do to a beach club's shoreline?",
+        "Compare the claimed time to the tide chart's low tide."
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-04"
+    },
+    {
+      "id": "wrong-direction",
+      "caseNumber": 5,
+      "title": "The Wrong Direction",
+      "category": "Observation",
+      "difficulty": "Easy",
+      "story": "A witness swears from her living-room window: 'I saw the getaway car tear past this window, heading north, fast!' The detective asks her to point north and she points across the street toward the cemetery. He quietly marks her testimony unreliable. What did she get wrong?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "Her window looks out on a road that runs east to west.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "A car passing her window could only travel east or west.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "She pointed north straight down a road that has no north.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "The road outside her window runs east-west, so no car could have been 'heading north' past it."
+        },
+        {
+          "id": "a2",
+          "text": "Cemeteries close their gates to cars at night."
+        },
+        {
+          "id": "a3",
+          "text": "Getaway cars never use residential streets."
+        },
+        {
+          "id": "a4",
+          "text": "A speeding car would be silent, so she could not have seen it."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "Her window faces a road running east-west; cars pass it only going east or west. 'Heading north' describes a direction that road does not have, so her story was manufactured rather than observed.",
+      "hints": [
+        "Lay the street map under her window.",
+        "Which two compass directions can a car on that road actually follow?"
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-05"
+    },
+    {
+      "id": "impossible-date",
+      "caseNumber": 6,
+      "title": "The Impossible Date",
+      "category": "Observation",
+      "difficulty": "Easy",
+      "story": "A shopkeeper waves a crumpled receipt as proof of a delivery that supposedly happened on the last day of February 2026. Printed across the top is: 30/02/2026. You smile and hand the receipt back. What gave it away?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "February 2026 has 28 days, and it was not a leap year.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The receipt printed its own date - nobody typed it by hand.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "February 30 is a date the calendar never contains.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "February 30 does not exist."
+        },
+        {
+          "id": "a2",
+          "text": "2026 is a leap year, so February had 30 days."
+        },
+        {
+          "id": "a3",
+          "text": "The date was printed in red all-caps."
+        },
+        {
+          "id": "a4",
+          "text": "A 2026 receipt could not have been produced in February."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "A machine-printed 30/02/2026 is impossible: February ends on the 28th in 2026 (no leap day). The receipt was fabricated because no real device could stamp a date that never occurred.",
+      "hints": [
+        "Count the days in February 2026.",
+        "Was 2026 a leap year?"
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-06"
+    },
+    {
+      "id": "short-mechanic",
+      "caseNumber": 7,
+      "title": "The Short Mechanic",
+      "category": "Lateral Thinking",
+      "difficulty": "Hard",
+      "story": "A junior auto mechanic who lives on the 12th floor rides the tower elevator up to the 7th floor every morning and walks the final five flights of stairs. Every evening he rides the same elevator all the way down from the 12th floor to the lobby without touching a stair. Why the strange routine?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "The elevator and its buttons work perfectly every day.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "In the morning he is alone in the car and can only reach the 7th-floor button.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "The lobby button is the lowest one on the panel - just the right height.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "He is too short to reach the button for the 12th floor."
+        },
+        {
+          "id": "a2",
+          "text": "He walks the top floors to build stamina for the work day."
+        },
+        {
+          "id": "a3",
+          "text": "The elevator cannot serve floors 8-12 until after 9 am."
+        },
+        {
+          "id": "a4",
+          "text": "He delivers breakfast boxes to floors 8 through 11."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "The 12th-floor button sits out of his reach. The 7th-floor button and the lobby button - both low on the panel - are the ones he can press. Coming home he only needs the lobby button, so the ride down is a single, easy press.",
+      "hints": [
+        "Compare the heights of a '7' button, a '12' button, and a 'lobby' button.",
+        "It has nothing to do with the elevator's mechanics."
+      ],
+      "timeLimitSeconds": 90,
+      "availableDate": "2026-08-07"
+    },
+    {
+      "id": "rope-ladder",
+      "caseNumber": 8,
+      "title": "The Rope Ladder",
+      "category": "Lateral Thinking",
+      "difficulty": "Easy",
+      "story": "A sailor hangs a rope ladder over the side of his anchored boat so that the lowest rung just kisses the water. The tide rises two feet over the next hour, and the rungs are one foot apart. How many rungs are under water when the hour is up?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "The boat is floating on the water, not nailed to the seabed.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The rising tide lifts the boat - and the ladder - by the same two feet.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "The lowest rung only ever touches the same surface.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "None - the boat rises with the tide, so the bottom rung stays level with the water."
+        },
+        {
+          "id": "a2",
+          "text": "Two rungs"
+        },
+        {
+          "id": "a3",
+          "text": "One rung"
+        },
+        {
+          "id": "a4",
+          "text": "Half of them"
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "An anchored but floating boat rises exactly as much as the water around it. The ladder rides up with the hull, so the lowest rung remains exactly at the surface - no extra rungs are ever submerged.",
+      "hints": [
+        "What happens to any floating object when the tide comes in?",
+        "Re-read the phrase 'lowest rung just touches the water'."
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-08"
+    },
+    {
+      "id": "overflowing-glass",
+      "caseNumber": 9,
+      "title": "The Overflowing Glass",
+      "category": "Science",
+      "difficulty": "Easy",
+      "story": "You fill a glass to the very brim with cold water and gently slide in a large ice cube. It floats, and no water spills. The cube melts completely. What happens to the water level?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "A floating body displaces a volume equal to the weight of its melted self.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The cube's frozen bulk is larger than the water it will become.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "Displaced volume in, melt volume out - they cancel exactly.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "It stays exactly at the brim."
+        },
+        {
+          "id": "a2",
+          "text": "It overflows slightly."
+        },
+        {
+          "id": "a3",
+          "text": "It drops a little below the brim."
+        },
+        {
+          "id": "a4",
+          "text": "It rises only where the cube was."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "Floating ice displaces water equal to its own weight. Melting turns it into exactly that weight of liquid water, which occupies exactly the displaced volume. The glass neither overflows nor drops; the level holds steady.",
+      "hints": [
+        "What does a floating object displace - its whole weight in water?",
+        "Compare the displaced volume with the volume of the water the cube becomes."
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-09"
+    },
+    {
+      "id": "rising-scale",
+      "caseNumber": 10,
+      "title": "The Rising Scale",
+      "category": "Science",
+      "difficulty": "Medium",
+      "story": "A 100 kg man stands on a bathroom scale inside an elevator. The car accelerates smoothly upward. While it is still speeding up, what does the scale read compared to 100 kg?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "To start moving upward the floor must push harder than his weight.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "That extra push is read back as extra mass on the scale.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "At constant speed - after accelerating - the reading settles back to 100 kg.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "More than 100 kg during the upward acceleration."
+        },
+        {
+          "id": "a2",
+          "text": "Exactly 100 kg for the whole ride."
+        },
+        {
+          "id": "a3",
+          "text": "Less than 100 kg, because the floor drops away beneath him."
+        },
+        {
+          "id": "a4",
+          "text": "It oscillates between 100 and 0 kg."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "Upward acceleration calls for a net upward force, so the scale must push harder than his weight and reads above 100 kg. Once the elevator travels at steady speed, the extra force disappears and the reading returns to 100 kg.",
+      "hints": [
+        "Remember the sinking feeling in your stomach the moment a lift starts up.",
+        "Only acceleration bends the reading - constant speed does not."
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-10"
+    },
+    {
+      "id": "three-double-letters",
+      "caseNumber": 11,
+      "title": "The Three Double Letters",
+      "category": "Wordplay",
+      "difficulty": "Medium",
+      "story": "What common English word contains three consecutive pairs of double letters? It begins like the place where bank ledgers live and ends like a person who keeps the books.",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "It starts with the word for a financial record of transactions.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "Its six middle letters form three doubled pairs in a row.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "An accountant would close this at the end of the month.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "Bookkeeper"
+        },
+        {
+          "id": "a2",
+          "text": "Bookeeper"
+        },
+        {
+          "id": "a3",
+          "text": "Trillionaire"
+        },
+        {
+          "id": "a4",
+          "text": "Checkerboard"
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "B-O-O-K-K-E-E-P-E-R carries three consecutive doubled pairs: oo, kk, ee. 'Bookkeeper' is the dictionary's most famous holder of three consecutive double letters.",
+      "hints": [
+        "What do accountants close at the end of the month?",
+        "Spell out 'book' plus 'keeper' and inspect the middle."
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-11"
+    },
+    {
+      "id": "shrinking-word",
+      "caseNumber": 12,
+      "title": "Turning Shorter",
+      "category": "Wordplay",
+      "difficulty": "Easy",
+      "story": "I am an ordinary five-letter word. Add two letters to me and I become even shorter than before - in meaning, at least. What word am I?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "The two added letters form the suffix -er.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The result is a word that means 'less long'.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "My root word describes a lack of length.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "short - it becomes shorter"
+        },
+        {
+          "id": "a2",
+          "text": "tall - it becomes taller"
+        },
+        {
+          "id": "a3",
+          "text": "light - it becomes lighter"
+        },
+        {
+          "id": "a4",
+          "text": "large - it becomes larger"
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "Add -er to 'short' and you get 'shorter' - a word meaning more short. Its spelling grows by two letters while its meaning shrinks, which is exactly the trick.",
+      "hints": [
+        "Comparative adjectives usually take -er.",
+        "Pick the dimension that seems to contradict after adding -er."
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-12"
+    },
+    {
+      "id": "ledger-sequence",
+      "caseNumber": 13,
+      "title": "The Ledger Sequence",
+      "category": "Pattern",
+      "difficulty": "Medium",
+      "story": "A night-shift bookkeeper scribbles a note beside a column of numbers: 2, 6, 12, 20, 30, and a question mark. What number belongs at the question mark?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "Each term jumps by 4, then 6, then 8, then 10 - look deeper than the gaps.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "Write each term as a pair multiplied: 1x2, 2x3, 3x4...",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "The pattern is 'n multiplied by n plus one'.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "42"
+        },
+        {
+          "id": "a2",
+          "text": "40"
+        },
+        {
+          "id": "a3",
+          "text": "36"
+        },
+        {
+          "id": "a4",
+          "text": "44"
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "2 = 1x2, 6 = 2x3, 12 = 3x4, 20 = 4x5, 30 = 5x6, so the next term is 6x7 = 42. The gaps grow, but underneath them hides a chain of consecutive products.",
+      "hints": [
+        "The gaps grow by two each step - what sequence is hiding between the gaps?",
+        "Think of consecutive multiplication tables."
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-13"
+    },
+    {
+      "id": "look-and-say",
+      "caseNumber": 14,
+      "title": "The Look-and-Say Code",
+      "category": "Pattern",
+      "difficulty": "Hard",
+      "story": "A safe-cracker leaves a code that grows by describing itself: 1, then 11, then 21, then 1211, then 111221. What is the next term in the sequence?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "Each term is read aloud: 'one 1', 'two 1s', 'one 2, one 1'...",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The term 111221 is spoken as 'three 1s, two 2s, one 1'.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "Say the count first, then the digit - never skip a run.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "312211"
+        },
+        {
+          "id": "a2",
+          "text": "1112211"
+        },
+        {
+          "id": "a3",
+          "text": "132231"
+        },
+        {
+          "id": "a4",
+          "text": "12321"
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "111221 describes itself out loud: three 1s (31), two 2s (22), one 1 (11), giving 312211. Each term is a spoken snapshot of the term before it.",
+      "hints": [
+        "Say 111221 out loud in groups: 111, 22, 1.",
+        "Count runs of equal digits, never individual digits."
+      ],
+      "timeLimitSeconds": 90,
+      "availableDate": "2026-08-14"
+    },
+    {
+      "id": "pharaoh-hourglass",
+      "caseNumber": 15,
+      "title": "The Pharaoh's Hourglass",
+      "category": "Timeline",
+      "difficulty": "Medium",
+      "story": "An antiques dealer unveils a stone bas-relief he swears came from the court of Ramesses the Great. It shows the pharaoh seated beside a tall glass sand-hourglass while a scribe turns it over. The museum curator refuses the piece on the spot. Why?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "Ancient Egypt told time with sundials and water clocks.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The glass hourglass appeared in Europe around the 1300s.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "A pharaoh next to a medieval invention is a modern forgery's slip.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "Hourglasses did not exist in the time of Ramesses."
+        },
+        {
+          "id": "a2",
+          "text": "Pharaohs never allowed themselves to be carved at rest."
+        },
+        {
+          "id": "a3",
+          "text": "Sand was sacred and was forbidden from touching royalty."
+        },
+        {
+          "id": "a4",
+          "text": "The hourglass is drawn upside down."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "Ramesses the Great ruled around 1200 BC. Sand-driven hourglasses only appear in European records from about the 1300s AD. A relief pairing a pharaoh with a glass hourglass therefore cannot be ancient.",
+      "hints": [
+        "When was the hourglass actually invented?",
+        "What did Egyptian timekeepers actually use instead of sand?"
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-15"
+    },
+    {
+      "id": "trusty-coin",
+      "caseNumber": 16,
+      "title": "The Trusty Coin",
+      "category": "Timeline",
+      "difficulty": "Hard",
+      "story": "At a flea market a dealer offers a '1776 Continental' silver coin - and beams as he points out the proud motto stamped across it: IN GOD WE TRUST. A coin specialist smiles and walks away. Why?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "The motto 'In God We Trust' began appearing on US coins in 1864.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "A 1776 coin bearing an 1864 motto cannot be genuine.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "The date on the coin betrays the forgery's true age.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "No US coin of 1776 carried 'In God We Trust' - it started in 1864."
+        },
+        {
+          "id": "a2",
+          "text": "Colonial America never struck silver coins."
+        },
+        {
+          "id": "a3",
+          "text": "Continental currency was printed on paper, never cut into round coins."
+        },
+        {
+          "id": "a4",
+          "text": "The date should legally read '1770' for exchange."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "'In God We Trust' first appeared on US coins in 1864. Any '1776' coin bearing that motto could only have been struck after 1864 - a telltale anachronism that gives the forgery away.",
+      "hints": [
+        "Check when the motto debuted on coinage - not when the country was founded.",
+        "Which of the coin's two claims is younger?"
+      ],
+      "timeLimitSeconds": 90,
+      "availableDate": "2026-08-16"
+    },
+    {
+      "id": "midnight-blanket",
+      "caseNumber": 17,
+      "title": "The Midnight Blanket",
+      "category": "Crime",
+      "difficulty": "Medium",
+      "story": "A man is found stabbed in a garden at dawn. Snow fell steadily from 10 pm until midnight, leaving one smooth unbroken blanket over everything. The coroner places the death around 11:30 pm. Yet not a single footprint crosses the fresh snow to the street. How did the killer escape without leaving tracks?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "The snow stopped falling at exactly midnight.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The death happened around 11:30 - before the snow stopped.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "A trail laid before midnight vanishes under the falling flakes.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "The killer's prints were covered by snow that kept falling until midnight."
+        },
+        {
+          "id": "a2",
+          "text": "The killer rappelled over the garden wall without touching the ground."
+        },
+        {
+          "id": "a3",
+          "text": "The killer walked back out in the victim's footsteps."
+        },
+        {
+          "id": "a4",
+          "text": "The killer's boot-heat melted his own trail behind him."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "The man was stabbed at about 11:30, and his killer walked out before midnight while snow was still falling. The same snow that blanketed the scene concealed the footprints; by dawn the garden looked as though nobody had ever crossed it.",
+      "hints": [
+        "What time did the snowfall end, and what time did the killer leave?",
+        "Can snow hide a trail that was made before it finished falling?"
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-17"
+    },
+    {
+      "id": "silent-alarm",
+      "caseNumber": 18,
+      "title": "The Silent Alarm",
+      "category": "Crime",
+      "difficulty": "Hard",
+      "story": "A wing of a museum seals itself at closing: motion sensors arm the moment the last person leaves. Overnight the wing's masterpiece vanishes. The alarm log shows nothing, the cameras show nothing, and the window is broken - from the inside outward. No staff and no visitors stayed behind. How was it stolen?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "The window was pushed out from inside - the thief was already in the room.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "The sensors arm themselves only once the floor is empty.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "Hiding before closing beats tripping the sensors after closing.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "The thief hid inside until the sensors armed, then escaped through the window."
+        },
+        {
+          "id": "a2",
+          "text": "The painting on the wall was a hologram that dissolved by morning."
+        },
+        {
+          "id": "a3",
+          "text": "The cameras ran a repeating ten-minute loop."
+        },
+        {
+          "id": "a4",
+          "text": "A drone cut the power and crawled in through a vent."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "The motion grid arms itself only when the floor registers empty. A thief concealed before closing time slipped past that moment entirely - no alarm and no camera, because to the system he was never there. He simply pushed the window out from inside and left; the breaking direction gives him away.",
+      "hints": [
+        "When does the security system think the floor is empty?",
+        "Which way do the broken glass shards lie?"
+      ],
+      "timeLimitSeconds": 90,
+      "availableDate": "2026-08-18"
+    },
+    {
+      "id": "twenty-cent-mystery",
+      "caseNumber": 19,
+      "title": "The Twenty-Cent Coins",
+      "category": "General Mystery",
+      "difficulty": "Easy",
+      "story": "A cashier empties two coins onto the counter. 'Together,' she says, 'they are worth 30 cents. And one of them - this one,' she taps a coin, 'is not a 10-cent coin.' What are the two coins?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "There are exactly two coins in play.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "Quarter plus nickel is the only clean way to make 30 cents.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "Both standard coins may be 'not a 10-cent coin' - the sentence only rules out one.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "A quarter and a nickel."
+        },
+        {
+          "id": "a2",
+          "text": "A dime and two nickels."
+        },
+        {
+          "id": "a3",
+          "text": "A penny and a 29-cent coin."
+        },
+        {
+          "id": "a4",
+          "text": "A dime and a 20-cent coin."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "A quarter (25 cents) and a nickel (5 cents) total 30 cents. The statement 'one of them is not a 10-cent coin' is perfectly true - you simply assumed the other coin had to be the dime.",
+      "hints": [
+        "Re-read the sentence: it only says one coin is NOT a dime.",
+        "Which two standard coins add up to 30 cents?"
+      ],
+      "timeLimitSeconds": 60,
+      "availableDate": "2026-08-19"
+    },
+    {
+      "id": "slower-horse",
+      "caseNumber": 20,
+      "title": "The Slower Horse",
+      "category": "General Mystery",
+      "difficulty": "Medium",
+      "story": "Two rivals own magnificent horses and agree to settle a bet with a race. The eccentric rule: the LAST horse to cross the finish line decides the winner. Both men stand frozen at the start - whoever moves first might hand victory to the other. A friend whispers two words, and suddenly both gallop at full speed. What did he say?",
+      "clues": [
+        {
+          "id": "c1",
+          "text": "If a rider crosses first on his own horse, he loses the bet.",
+          "orderIndex": 0
+        },
+        {
+          "id": "c2",
+          "text": "Swap the horses: now each man is riding the enemy's horse.",
+          "orderIndex": 1
+        },
+        {
+          "id": "c3",
+          "text": "With the horses traded, racing full speed wins the bet - and feels like winning the race.",
+          "orderIndex": 2
+        }
+      ],
+      "answers": [
+        {
+          "id": "a1",
+          "text": "Swap horses."
+        },
+        {
+          "id": "a2",
+          "text": "Tie the horses together."
+        },
+        {
+          "id": "a3",
+          "text": "Race the opposite direction."
+        },
+        {
+          "id": "a4",
+          "text": "Double all bets."
+        }
+      ],
+      "correctAnswerId": "a1",
+      "explanation": "The owner whose horse finishes LAST wins. After a swap, each rider rides the enemy's horse, so each now wants his own horse to be last. Both rush to finish first on the horse they are riding, making their own real horse the slow one. The paradox unwinds into an ordinary race.",
+      "hints": [
+        "Whose horse are you sitting on?",
+        "Make winning the ride and winning the bet point in the same direction."
+      ],
+      "timeLimitSeconds": 90,
+      "availableDate": "2026-08-20"
+    }
+  ]
+}
